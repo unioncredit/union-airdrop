@@ -73,7 +73,12 @@ const parser = new Parser(opts);
 const csv = parser.parse(results);
 
 const csvPath = path.resolve("./data/union-tokens.csv");
+const jsonPath = path.resolve("./data/union-tokens.json");
 
 fs.writeFileSync(csvPath, csv);
 
 console.log(".csv saved to:", csvPath);
+
+fs.writeFileSync(jsonPath, JSON.stringify(results));
+
+console.log(".json saved to:", jsonPath);

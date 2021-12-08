@@ -1,11 +1,18 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const chai = require("chai");
+const fs = require("fs");
+const path = require("path");
 const chaiAsPromised = require("chai-as-promised");
 const { MerkleTree } = require("merkletreejs");
 const keccak256 = require("keccak256");
 
 chai.use(chaiAsPromised);
+
+const jsonFile = fs.readFileSync(
+  path.resolve(__dirname, "../data/union-tokens.json")
+);
+const json = JSON.parse(jsonFile);
 
 describe("UnionAirdrop", function () {
   let merkleTree;
@@ -16,14 +23,14 @@ describe("UnionAirdrop", function () {
   beforeEach(async () => {
     accounts = await ethers.getSigners();
 
-    const addresses = await Promise.all(
-      accounts.map(async (account) => {
-        const address = await account.getAddress();
-        return ethers.utils.solidityKeccak256(["address"], [address]);
-      })
-    );
+    const array = json.map((item) => {
+      return ethers.utils.solidityKeccak256(
+        ["address", "uint256"],
+        [item.address, item.tokens]
+      );
+    });
 
-    merkleTree = new MerkleTree(addresses, keccak256, {
+    merkleTree = new MerkleTree(array, keccak256, {
       sortPairs: true,
     });
 
@@ -43,4 +50,6 @@ describe("UnionAirdrop", function () {
     const balance = await t.balanceOf(mainAccount);
     expect(balance.toString()).to.equal("1000000000000000000000000");
   });
+
+  it("happy path: claim", async () => {});
 });
