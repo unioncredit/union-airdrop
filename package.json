@@ -10,8 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
+    "@openzeppelin/contracts": "^4.4.0",
     "ethers": "^5.5.2",
     "json2csv": "^5.0.6",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "hardhat": "^2.7.0"
   }
 }
