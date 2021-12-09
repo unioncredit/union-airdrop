@@ -4,8 +4,11 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract UnionAirdrop is Ownable {
+  using SafeERC20 for IERC20;
+
   bytes32 public merkleRoot;
 
   address public token;
@@ -58,12 +61,12 @@ contract UnionAirdrop is Ownable {
 
 
     claimed[msg.sender] = amount;
-    IERC20(token).transfer(msg.sender, amount);
+    IERC20(token).safeTransfer(msg.sender, amount);
 
     emit TokensClaimed(msg.sender, amount);
   }
 
   function recoverTokens(address erc20Token, uint256 amount) public onlyOwner {
-    IERC20(erc20Token).transfer(msg.sender, amount);
+    IERC20(erc20Token).safeTransfer(msg.sender, amount);
   }
 }
