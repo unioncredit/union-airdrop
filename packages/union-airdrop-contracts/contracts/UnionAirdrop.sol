@@ -19,10 +19,11 @@ contract UnionAirdrop is Ownable {
 
   event TokensClaimed(address sender, uint256 amount);
 
-  constructor(bytes32 _root, address _token, uint256 _endDate) {
+  constructor(bytes32 _root, address _token, bool _paused, uint256 _endDate) {
     merkleRoot = _root;
     token = _token;
     endDate = _endDate;
+    paused = _paused;
   }
 
   function setMerkleRoot(bytes32 root) public onlyOwner {

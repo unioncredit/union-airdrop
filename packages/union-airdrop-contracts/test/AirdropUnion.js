@@ -53,8 +53,9 @@ describe("UnionAirdrop", function () {
     t = await TestToken.deploy();
     await t.deployed();
 
+    const paused = false;
     const UnionAirdrop = await ethers.getContractFactory("UnionAirdrop");
-    u = await UnionAirdrop.deploy(root, t.address, endDate);
+    u = await UnionAirdrop.deploy(root, t.address, paused, endDate);
     await u.deployed();
   });
 
