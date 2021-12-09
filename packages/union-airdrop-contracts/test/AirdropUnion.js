@@ -77,4 +77,20 @@ describe("UnionAirdrop", function () {
     const proof = merkleTree.getHexProof(leaf);
     await u.claimTokens(proof, amount);
   });
+
+  it("happy path: recoverTokens", async () => {
+    await t.transfer(u.address, parseEther("1"));
+    const balance = await t.balanceOf(u.address);
+    console.log("UnionAirdrop balance:", balance.toString());
+
+    await u.recoverTokens(t.address, balance);
+
+    const newBalance = await t.balanceOf(u.address);
+    expect(newBalance.toString()).to.equal("0");
+
+    const mainAccount = await accounts[0].getAddress();
+    const mainAccountBalance = await t.balanceOf(mainAccount);
+
+    expect(mainAccountBalance.toString()).to.equal("1000000000000000000000000");
+  });
 });

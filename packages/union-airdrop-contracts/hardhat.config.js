@@ -1,6 +1,5 @@
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
-require("@typechain/hardhat");
 require("hardhat-gas-reporter");
 
 /**

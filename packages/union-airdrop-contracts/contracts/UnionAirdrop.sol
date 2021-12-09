@@ -53,4 +53,8 @@ contract UnionAirdrop is Ownable {
 
     emit TokensClaimed(msg.sender, amount);
   }
+
+  function recoverTokens(address erc20Token, uint256 amount) public onlyOwner {
+    IERC20(erc20Token).transfer(msg.sender, amount);
+  }
 }
