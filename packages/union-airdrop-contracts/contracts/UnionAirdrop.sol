@@ -11,15 +11,18 @@ contract UnionAirdrop is Ownable {
   address public token;
 
   bool public paused;
+
+  uint256 public endDate;
   
   // address to amount claimed
   mapping(address => uint256) public claimed;
 
   event TokensClaimed(address sender, uint256 amount);
 
-  constructor(bytes32 _root, address _token) {
+  constructor(bytes32 _root, address _token, uint256 _endDate) {
     merkleRoot = _root;
     token = _token;
+    endDate = _endDate;
   }
 
   function setMerkleRoot(bytes32 root) public onlyOwner {
@@ -34,8 +37,13 @@ contract UnionAirdrop is Ownable {
     paused = _paused;
   }
 
+  function setEndDate(uint256 _endDate) public onlyOwner {
+    endDate = _endDate;
+  }
+
   function claimTokens(bytes32[] memory proof, uint256 amount) public {
     require(!paused, "paused");
+    require(block.timestamp < endDate, "claim period ended");
     require(claimed[msg.sender] == 0, "sender already claimed");
 
     require(
