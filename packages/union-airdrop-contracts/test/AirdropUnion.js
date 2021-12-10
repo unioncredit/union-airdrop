@@ -79,6 +79,9 @@ describe("UnionAirdrop", function () {
 
     const proof = merkleTree.getHexProof(leaf);
     await u.claimTokens(proof, amount);
+
+    const badClaim = u.claimTokens(proof, amount);
+    expect(badClaim).to.be.rejectedWith(Error);
   });
 
   it("happy path: recoverTokens", async () => {
