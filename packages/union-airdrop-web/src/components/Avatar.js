@@ -8,6 +8,9 @@ export default function Avatar({ address, size }) {
   const [error, setError] = useState(false);
   const ENSName = useENSName(address);
   const image = useENSImage(ENSName);
+
+  if (!address) return null;
+
   const blockie = makeBlockie(address);
 
   return (
@@ -22,4 +25,3 @@ export default function Avatar({ address, size }) {
 Avatar.defaultProps = {
   size: 26,
 };
-

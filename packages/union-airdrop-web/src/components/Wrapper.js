@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { Text, Button, Layout, Box, Grid, Wallet } from "union-ui";
 import { ReactComponent as Logo } from "union-ui/lib/icons/logo.svg";
@@ -29,13 +30,9 @@ export default function Wrapper({ children }) {
           <Grid.Row>
             <Grid.Col>
               <Box className="logo-wrapper" justify="start" fluid>
-                <a
-                  href="https://union.finance/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <Link to="/">
                   <Logo width="24px" />
-                </a>
+                </Link>
               </Box>
             </Grid.Col>
             <Grid.Col>
@@ -67,7 +64,7 @@ export default function Wrapper({ children }) {
                 direction="vertical"
                 className="inner-wrapper"
               >
-                <Box maxw="446px" direction="vertical" mt="96px">
+                <Box maxw="446px" direction="vertical" mt="96px" fluid>
                   {isUnsupportedChainIdError && (
                     <Text mt="24px" align="center" color="red600">
                       You are on an unsupported chain. Please connect to

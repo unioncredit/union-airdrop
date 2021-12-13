@@ -3,7 +3,7 @@ import ClaimCard from "../components/ClaimCard";
 
 export default function Claim() {
   return (
-    <Box fluid justify="center" w="100%" mt="24px" className="app">
+    <Box direction="vertical" align="center" justify="center" fluid>
       <ClaimCard />
     </Box>
   );
