@@ -9,6 +9,7 @@ import {
   Divider,
   Stat,
   Label,
+  Alert,
 } from "union-ui";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
 
@@ -31,6 +32,8 @@ export default function ClaimCard() {
     { label: "In Default", value: 500, negative: true },
   ];
 
+  const elegible = true;
+
   return (
     <Card>
       <Card.Body>
@@ -44,7 +47,7 @@ export default function ClaimCard() {
           </Box>
         </Box>
         <Divider mt="24px" mb="24px" />
-        <Box justify="center">
+        <Box justify="center" mb="16px">
           <Stat
             size="large"
             align="center"
@@ -56,25 +59,32 @@ export default function ClaimCard() {
             }
           />
         </Box>
-        <Card packed mt="16px" className="greyCard">
-          <Card.Body>
-            <Text align="center" grey={800}>
-              Your Distribution Breakdown
-            </Text>
-            {breakdown.map((stat) => (
-              <Box justify="space-between" mt="12px">
-                <Label as="p" grey={400}>
-                  {stat.label}
-                </Label>
-                <Label as="p" grey={400} align="right">
-                  {stat.negative && "-"}
-                  {stat.value} UNION
-                </Label>
-              </Box>
-            ))}
-          </Card.Body>
-        </Card>
-        <Button label="Claim tokens" fluid mt="16px" />
+        {elegible ? (
+          <Card packed className="greyCard">
+            <Card.Body>
+              <Text align="center" grey={800}>
+                Your Distribution Breakdown
+              </Text>
+              {breakdown.map((stat) => (
+                <Box justify="space-between" mt="12px">
+                  <Label as="p" grey={400}>
+                    {stat.label}
+                  </Label>
+                  <Label as="p" grey={400} align="right">
+                    {stat.negative && "-"}
+                    {stat.value} UNION
+                  </Label>
+                </Box>
+              ))}
+            </Card.Body>
+          </Card>
+        ) : (
+          <Alert
+            size="small"
+            label="You’re not elegible for the $UNION distribution"
+          />
+        )}
+        <Button label="Claim tokens" fluid mt="16px" disabled={!elegible} />
       </Card.Body>
     </Card>
   );

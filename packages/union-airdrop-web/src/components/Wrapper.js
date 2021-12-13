@@ -43,6 +43,7 @@ export default function Wrapper({ children }) {
                       name={name}
                       avatar={<Avatar address={account} />}
                       onClick={() => setDisconnectModalOpen(true)}
+                      networkSrc="/ethereum.png"
                     />
                   </Box>
                 ) : (
