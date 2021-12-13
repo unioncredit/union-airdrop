@@ -20,17 +20,17 @@ function uniqTrust(data, address, propertyA, propertyB) {
 }
 
 function calculateUnionTokens(data) {
-  let value = 1000;
+  let value = 5000;
 
   if (data.isDefaulted) value -= 500;
 
-  if (data.isRingOwner) value += 1000;
+  if (data.isRingOwner) value += 3141;
 
   value += data.borrowers * 100;
 
   value += data.stakers * 100;
 
-  return value;
+  return value >= 25000 ? 25000 : value;
 }
 
 const addresses = readJsonFile("./data/polygon-snapshot.json");
