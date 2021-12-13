@@ -27,9 +27,8 @@ export default function Wrapper({ children }) {
       <Layout.Main>
         <Grid>
           <Grid.Row>
-            <Grid.Col></Grid.Col>
             <Grid.Col>
-              <Box className="logo-wrapper" justify="center" fluid>
+              <Box className="logo-wrapper" justify="start" fluid>
                 <a
                   href="https://union.finance/"
                   target="_blank"
@@ -68,13 +67,15 @@ export default function Wrapper({ children }) {
                 direction="vertical"
                 className="inner-wrapper"
               >
-                {isUnsupportedChainIdError && (
-                  <Text mt="24px" align="center" color="red600">
-                    You are on an unsupported chain. Please connect to ethereum
-                    mainnet
-                  </Text>
-                )}
-                {children}
+                <Box maxw="446px" direction="vertical" mt="96px">
+                  {isUnsupportedChainIdError && (
+                    <Text mt="24px" align="center" color="red600">
+                      You are on an unsupported chain. Please connect to
+                      ethereum mainnet
+                    </Text>
+                  )}
+                  {children}
+                </Box>
               </Box>
             </Grid.Col>
           </Grid.Row>

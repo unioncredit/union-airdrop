@@ -1,4 +1,5 @@
 import { Box } from "union-ui";
+import { Routes, Route } from "react-router-dom";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
@@ -6,7 +7,8 @@ import useEagerConnect from "./hooks/useEagerConnect";
 import useInactiveListener from "./hooks/useInactiveListener";
 
 import Wrapper from "./components/Wrapper";
-import ClaimCard from "./components/ClaimCard";
+import Home from "./views/Home";
+import Claim from "./views/Claim";
 
 function getLibrary(provider) {
   return new Web3Provider(provider);
@@ -26,9 +28,10 @@ function App() {
         <ConnectWeb3>
           <Box fluid mt="24px">
             <Wrapper>
-              <Box fluid justify="center" w="100%" mt="24px" className="app">
-                <ClaimCard />
-              </Box>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/claim" element={<Claim />} />
+              </Routes>
             </Wrapper>
           </Box>
         </ConnectWeb3>
