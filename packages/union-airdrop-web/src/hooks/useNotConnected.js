@@ -11,5 +11,5 @@ export default function useNotConnected() {
     if (location.pathname.includes("claim") && (!account || !library)) {
       navigate("/");
     }
-  }, [account, library, location.pathname]);
+  }, [account, library, location.pathname, navigate]);
 }
