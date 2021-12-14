@@ -21,9 +21,14 @@ import useENSName from "../hooks/useENSName";
 import truncateAddress from "../utils/truncateAddress";
 import useClaimable from "../hooks/useClaimable";
 import useMerkleRoot from "../hooks/useMerkleRoot";
+import usePaused from "../hooks/usePaused";
+import useNotConnected from "../hooks/useNotConnected";
 
 export default function ClaimCard() {
+  useNotConnected();
+
   const { account } = useWeb3React();
+  const { data: paused } = usePaused();
   const { storedRoot, merkleTree } = useMerkleRoot();
 
   const ENS = useENSName(account);
@@ -50,9 +55,9 @@ export default function ClaimCard() {
 
   const elegible = tokens > 0;
 
-  const validRoot = storedRoot === merkleTree.getHexRoot();
+  const active = !paused && storedRoot === merkleTree.getHexRoot();
 
-  console.log(storedRoot, merkleTree.getHexRoot());
+  console.log("roots:", storedRoot, merkleTree.getHexRoot());
 
   return (
     <Card>
@@ -105,6 +110,16 @@ export default function ClaimCard() {
             </Card.Body>
           </Card>
         )}
+
+        {!active && (
+          <Alert
+            mt="16px"
+            size="small"
+            icon={<Check />}
+            label="Claiming not active"
+          />
+        )}
+
         {claimed ? (
           <Box
             align="center"
@@ -122,7 +137,7 @@ export default function ClaimCard() {
             label="Claim tokens"
             fluid
             mt="16px"
-            disabled={!elegible || !validRoot}
+            disabled={!elegible || !active}
           />
         )}
       </Card.Body>
