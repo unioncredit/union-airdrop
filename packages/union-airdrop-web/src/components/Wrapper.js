@@ -30,14 +30,10 @@ export default function Wrapper({ children }) {
         <Grid>
           <Grid.Row>
             <Grid.Col>
-              <Box className="logo-wrapper" justify="start" fluid>
+              <Box className="logo-wrapper" justify="start" align="center" fluid>
                 <Link to="/">
                   <Logo width="24px" />
                 </Link>
-              </Box>
-            </Grid.Col>
-            <Grid.Col>
-              <Box fluid align="center">
                 {account ? (
                   <Box ml="auto">
                     <Wallet

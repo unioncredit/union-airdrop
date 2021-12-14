@@ -1,5 +1,9 @@
 @import "union-ui/lib";
 
+body {
+  overflow-x: hidden;
+}
+
 .greyCard {
   background-color: #fafaf9;
 }
