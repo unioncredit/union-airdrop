@@ -14,31 +14,39 @@ import {
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
 import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
+import { commify } from "@ethersproject/units";
 
 import Avatar from "../components/Avatar";
 import useENSName from "../hooks/useENSName";
 import truncateAddress from "../utils/truncateAddress";
+import useClaimable from "../hooks/useClaimable";
 
 export default function ClaimCard() {
   const { account } = useWeb3React();
 
   const ENS = useENSName(account);
 
+  const {
+    tokens,
+    borrowers,
+    isDefaulted,
+    isRingOwner,
+    stakers,
+  } = useClaimable();
+
   const name = ENS || truncateAddress(account);
 
   const breakdown = [
     { label: "Base", value: 5000 },
-    { label: "Ring Bearer", value: 3141 },
-    { label: "Vouches provided (43)", value: 4300 },
-    { label: "Vouches received (4)", value: 400 },
-    { label: "In Default", value: 500, negative: true },
+    { label: "Ring Bearer", value: isRingOwner ? 3141 : 0 },
+    { label: `Vouches provided (${borrowers})`, value: borrowers * 100 },
+    { label: `Vouches received (${stakers})`, value: stakers * 100 },
+    { label: "In Default", value: 500, negative: isDefaulted },
   ];
-
-  const claimable = 123432;
 
   const claimed = true;
 
-  const elegible = claimable > 0;
+  const elegible = tokens > 0;
 
   return (
     <Card>
@@ -46,7 +54,7 @@ export default function ClaimCard() {
         <Box>
           <Avatar size={56} address={account} />
           <Box ml="12px" direction="vertical" justify="center">
-            <Heading size="small" weight="medium">
+            <Heading weight="medium" mb="4px">
               {name}
             </Heading>
             <Badge color="grey" label={truncateAddress(account)} />
@@ -60,7 +68,7 @@ export default function ClaimCard() {
             label="CLAIMABLE UNION"
             value={
               <>
-                {claimable} <Union className="unionSymbol" width="16px" />
+                {commify(tokens)} <Union className="unionSymbol" width="16px" />
               </>
             }
           />
@@ -79,12 +87,12 @@ export default function ClaimCard() {
               </Text>
               {breakdown.map((stat) => (
                 <Box justify="space-between" mt="12px">
-                  <Label as="p" grey={400}>
+                  <Label as="p" grey={400} m={0}>
                     {stat.label}
                   </Label>
-                  <Label as="p" grey={400} align="right">
+                  <Label as="p" grey={400} align="right" m={0}>
                     {stat.negative && "-"}
-                    {stat.value} UNION
+                    {commify(stat.value)} UNION
                   </Label>
                 </Box>
               ))}
@@ -96,11 +104,11 @@ export default function ClaimCard() {
             align="center"
             justify="center"
             className="claimedText"
-            mt="30px"
+            mt="24px"
           >
             <Check width="24px" />
             <Text color="green500" align="center" m={0}>
-              Claimed 12,341 $UNION
+              Claimed {commify(tokens)} UNION
             </Text>
           </Box>
         ) : (
