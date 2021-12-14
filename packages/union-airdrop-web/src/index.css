@@ -12,3 +12,11 @@
 .claimedText svg path {
   fill: #22c55e;
 }
+
+.governanceLink svg path {
+  fill: #3b82f6;
+}
+
+a {
+  text-decoration: none;
+}
