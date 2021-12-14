@@ -20,9 +20,11 @@ import Avatar from "../components/Avatar";
 import useENSName from "../hooks/useENSName";
 import truncateAddress from "../utils/truncateAddress";
 import useClaimable from "../hooks/useClaimable";
+import useMerkleRoot from "../hooks/useMerkleRoot";
 
 export default function ClaimCard() {
   const { account } = useWeb3React();
+  const { storedRoot, merkleTree } = useMerkleRoot();
 
   const ENS = useENSName(account);
 
@@ -44,9 +46,13 @@ export default function ClaimCard() {
     { label: "In Default", value: 500, negative: isDefaulted },
   ];
 
-  const claimed = true;
+  const claimed = false;
 
   const elegible = tokens > 0;
+
+  const validRoot = storedRoot === merkleTree.getHexRoot();
+
+  console.log(storedRoot, merkleTree.getHexRoot());
 
   return (
     <Card>
@@ -86,7 +92,7 @@ export default function ClaimCard() {
                 Your Distribution Breakdown
               </Text>
               {breakdown.map((stat) => (
-                <Box justify="space-between" mt="12px">
+                <Box justify="space-between" mt="12px" key={stat.label}>
                   <Label as="p" grey={400} m={0}>
                     {stat.label}
                   </Label>
@@ -112,7 +118,12 @@ export default function ClaimCard() {
             </Text>
           </Box>
         ) : (
-          <Button label="Claim tokens" fluid mt="16px" disabled={!elegible} />
+          <Button
+            label="Claim tokens"
+            fluid
+            mt="16px"
+            disabled={!elegible || !validRoot}
+          />
         )}
       </Card.Body>
     </Card>
