@@ -8,3 +8,7 @@
   position: relative;
   top: -4px;
 }
+
+.claimedText svg path {
+  fill: #22c55e;
+}

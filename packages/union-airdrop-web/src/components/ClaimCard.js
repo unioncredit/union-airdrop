@@ -12,6 +12,8 @@ import {
   Alert,
 } from "union-ui";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
+import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
+import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
 
 import Avatar from "../components/Avatar";
 import useENSName from "../hooks/useENSName";
@@ -32,7 +34,11 @@ export default function ClaimCard() {
     { label: "In Default", value: 500, negative: true },
   ];
 
-  const elegible = true;
+  const claimable = 123432;
+
+  const claimed = true;
+
+  const elegible = claimable > 0;
 
   return (
     <Card>
@@ -54,12 +60,18 @@ export default function ClaimCard() {
             label="CLAIMABLE UNION"
             value={
               <>
-                12,341 <Union className="unionSymbol" width="16px" />
+                {claimable} <Union className="unionSymbol" width="16px" />
               </>
             }
           />
         </Box>
-        {elegible ? (
+        {!elegible ? (
+          <Alert
+            size="small"
+            icon={<Info />}
+            label="You’re not elegible for the $UNION distribution"
+          />
+        ) : (
           <Card packed className="greyCard">
             <Card.Body>
               <Text align="center" grey={800}>
@@ -78,13 +90,22 @@ export default function ClaimCard() {
               ))}
             </Card.Body>
           </Card>
-        ) : (
-          <Alert
-            size="small"
-            label="You’re not elegible for the $UNION distribution"
-          />
         )}
-        <Button label="Claim tokens" fluid mt="16px" disabled={!elegible} />
+        {claimed ? (
+          <Box
+            align="center"
+            justify="center"
+            className="claimedText"
+            mt="30px"
+          >
+            <Check width="24px" />
+            <Text color="green500" align="center" m={0}>
+              Claimed 12,341 $UNION
+            </Text>
+          </Box>
+        ) : (
+          <Button label="Claim tokens" fluid mt="16px" disabled={!elegible} />
+        )}
       </Card.Body>
     </Card>
   );
