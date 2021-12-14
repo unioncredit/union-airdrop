@@ -65,7 +65,7 @@ export default function Wrapper({ children }) {
                 direction="vertical"
                 className="inner-wrapper"
               >
-                <Box maxw="446px" direction="vertical" mt="96px" fluid>
+                <Box maxw="446px" direction="vertical" mt="40px" fluid>
                   {isUnsupportedChainIdError && (
                     <Text mt="24px" align="center" color="red600">
                       You are on an unsupported chain. Please connect to

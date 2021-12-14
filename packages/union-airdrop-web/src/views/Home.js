@@ -4,7 +4,7 @@ import { ReactComponent as RightArrow } from "union-ui/lib/icons/arrowRight.svg"
 
 export default function Home() {
   return (
-    <Box direction="vertical" align="center" justify="center">
+    <Box direction="vertical" align="center" justify="center" mt="40px">
       <video width="80px" autoPlay loop muted controls={false}>
         <source src="/token_400.mp4" type="video/mp4" />
       </video>
