@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
-import { Text, Button, Layout, Box, Grid, Wallet } from "union-ui";
+import { Alert, Button, Layout, Box, Grid, Wallet } from "union-ui";
+import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
 import { ReactComponent as Logo } from "union-ui/lib/icons/logo.svg";
 
 import ConnectModal from "./ConnectModal";
@@ -67,10 +68,12 @@ export default function Wrapper({ children }) {
               >
                 <Box maxw="446px" direction="vertical" mt="40px" fluid>
                   {isUnsupportedChainIdError && (
-                    <Text mt="24px" align="center" color="red600">
-                      You are on an unsupported chain. Please connect to
-                      ethereum mainnet
-                    </Text>
+                    <Alert
+                      mb="24px"
+                      size="small"
+                      icon={<Info />}
+                      label="You are on an unsupported chain. Please connect to ethereum mainnet"
+                    />
                   )}
                   {children}
                 </Box>
