@@ -1,8 +1,16 @@
+import { useWeb3React } from "@web3-react/core";
 import { Link } from "react-router-dom";
 import { ButtonRow, Button, Box, Heading, Text, Label } from "union-ui";
 import { ReactComponent as RightArrow } from "union-ui/lib/icons/arrowRight.svg";
 
+import useConnectModal from "../hooks/useConnectModal";
+
 export default function Home() {
+  const { account, library } = useWeb3React();
+  const [, setConnectModalOpen] = useConnectModal();
+
+  const connected = account && library;
+
   return (
     <Box direction="vertical" align="center" justify="center" mt="40px">
       <video
@@ -29,9 +37,16 @@ export default function Home() {
         <RightArrow width="24px" />
       </Box>
       <ButtonRow fluid maxw="310px" direction="vertical" mt="24px">
-        <Link to="/claim" style={{ width: "100%" }}>
-          <Button fluid label="Check elegibility" />
-        </Link>
+        {connected ? (
+          <Link to="/claim" style={{ width: "100%" }}>
+            <Button fluid label="Check elegibility" />
+          </Link>
+        ) : (
+          <Button
+            label="Connect Wallet"
+            onClick={() => setConnectModalOpen(true)}
+          />
+        )}
       </ButtonRow>
     </Box>
   );
