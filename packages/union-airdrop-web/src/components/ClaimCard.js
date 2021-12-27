@@ -1,16 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import {
-  Card,
-  Text,
-  Heading,
-  Box,
-  Button,
-  Badge,
-  Divider,
-  Stat,
-  Label,
-  Alert,
-} from "union-ui";
+import { Card, Heading, Box, Badge, Divider, Stat, Alert } from "union-ui";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
 import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
@@ -23,6 +12,9 @@ import useClaimable from "../hooks/useClaimable";
 import useMerkleRoot from "../hooks/useMerkleRoot";
 import usePaused from "../hooks/usePaused";
 import useNotConnected from "../hooks/useNotConnected";
+import Breakdown from "../components/Breakdown";
+import Claimed from "../components/Claimed";
+import Delegate from "../components/Delegate";
 
 export default function ClaimCard() {
   useNotConnected();
@@ -56,6 +48,8 @@ export default function ClaimCard() {
   const elegible = tokens > 0;
 
   const active = !paused && storedRoot === merkleTree.getHexRoot();
+
+  const delegated = false;
 
   console.log("roots:", storedRoot, merkleTree.getHexRoot());
 
@@ -91,24 +85,15 @@ export default function ClaimCard() {
             label="You’re not elegible for the $UNION distribution"
           />
         ) : (
-          <Card packed className="greyCard">
-            <Card.Body>
-              <Text align="center" grey={800}>
-                Your Distribution Breakdown
-              </Text>
-              {breakdown.map((stat) => (
-                <Box justify="space-between" mt="12px" key={stat.label}>
-                  <Label as="p" grey={400} m={0}>
-                    {stat.label}
-                  </Label>
-                  <Label as="p" grey={400} align="right" m={0}>
-                    {stat.negative && "-"}
-                    {commify(stat.value)} UNION
-                  </Label>
-                </Box>
-              ))}
-            </Card.Body>
-          </Card>
+          <>
+            {claimed ? (
+              <Claimed tokens={tokens} />
+            ) : delegated ? (
+              <Breakdown breakdown={breakdown} disabled={!active} />
+            ) : (
+              <Delegate />
+            )}
+          </>
         )}
 
         {!active && (
@@ -117,27 +102,6 @@ export default function ClaimCard() {
             size="small"
             icon={<Check />}
             label="Claiming not active"
-          />
-        )}
-
-        {claimed ? (
-          <Box
-            align="center"
-            justify="center"
-            className="claimedText"
-            mt="24px"
-          >
-            <Check width="24px" />
-            <Text color="green500" align="center" m={0}>
-              Claimed {commify(tokens)} UNION
-            </Text>
-          </Box>
-        ) : (
-          <Button
-            label="Claim tokens"
-            fluid
-            mt="16px"
-            disabled={!elegible || !active}
           />
         )}
       </Card.Body>
