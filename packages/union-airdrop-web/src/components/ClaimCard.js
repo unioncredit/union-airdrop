@@ -17,6 +17,7 @@ import Breakdown from "../components/Breakdown";
 import Claimed from "../components/Claimed";
 import Delegate from "../components/Delegate";
 import useVotingWallet from "../hooks/useVotingWallet";
+import useClaimed from "../hooks/useClaimed";
 
 export default function ClaimCard() {
   useNotConnected();
@@ -25,6 +26,7 @@ export default function ClaimCard() {
   const { data: paused } = usePaused();
   const { storedRoot, merkleTree } = useMerkleRoot();
   const { data: delegate } = useVotingWallet();
+  const { data: claimed } = useClaimed();
 
   const ENS = useENSName(account);
 
@@ -45,8 +47,6 @@ export default function ClaimCard() {
     { label: `Vouches received (${stakers})`, value: stakers * 100 },
     { label: "In Default", value: 500, negative: isDefaulted },
   ];
-
-  const claimed = true;
 
   const elegible = tokens > 0;
 
