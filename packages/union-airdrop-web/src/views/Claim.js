@@ -23,7 +23,7 @@ export default function Claim() {
     }
 
     geoCheck();
-  }, []);
+  }, [navigate]);
 
   return (
     <Box direction="vertical" align="center" justify="center" fluid>
