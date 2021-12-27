@@ -4,20 +4,20 @@ import MetaMask from "union-ui/lib/icons/metamask.svg";
 import WalletConnect from "union-ui/lib/icons/walletconnect.svg";
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 4],
+  supportedChainIds: [1, 42],
 });
 
 const POLLING_INTERVAL = 12000;
 
 export const RPC_URLS = {
   1: "https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55",
-  4: "https://rinkeby.infura.io/v3/05bc032e727c40d79202e3373090ed55",
+  42: "https://kovan.infura.io/v3/05bc032e727c40d79202e3373090ed55",
 };
 
 export const walletconnect = new WalletConnectConnector({
   rpc: {
     1: RPC_URLS[1],
-    4: RPC_URLS[4],
+    42: RPC_URLS[42],
   },
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,

@@ -5,6 +5,7 @@ import { Box, Label, Card, Control, Collapse, Input, Button } from "union-ui";
 import { isAddress } from "ethers/lib/utils";
 import useDelegate from "../hooks/useDelegate";
 import useAddNotification from "../hooks/useAddNotification";
+import useVotingWallet from "../hooks/useVotingWallet";
 
 const DelegateType = {
   SELF: "self",
@@ -16,6 +17,7 @@ export default function Delegate() {
   const [delegateType, setDelegateType] = useState(DelegateType.SELF);
   const delegate = useDelegate();
   const addNotification = useAddNotification();
+  const { mutate: updateDelegate } = useVotingWallet();
 
   const {
     register,
@@ -44,6 +46,7 @@ export default function Delegate() {
     } catch (error) {
       addNotification("Delegation failed", { type: "error" });
     } finally {
+      await updateDelegate();
       clear();
     }
   };
