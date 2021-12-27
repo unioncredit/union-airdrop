@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { Card, Heading, Box, Badge, Divider, Stat, Alert } from "union-ui";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
@@ -15,6 +16,7 @@ import useNotConnected from "../hooks/useNotConnected";
 import Breakdown from "../components/Breakdown";
 import Claimed from "../components/Claimed";
 import Delegate from "../components/Delegate";
+import useVotingWallet from "../hooks/useVotingWallet";
 
 export default function ClaimCard() {
   useNotConnected();
@@ -22,6 +24,7 @@ export default function ClaimCard() {
   const { account } = useWeb3React();
   const { data: paused } = usePaused();
   const { storedRoot, merkleTree } = useMerkleRoot();
+  const { data: delegate } = useVotingWallet();
 
   const ENS = useENSName(account);
 
@@ -49,7 +52,7 @@ export default function ClaimCard() {
 
   const active = !paused && storedRoot === merkleTree.getHexRoot();
 
-  const delegated = false;
+  const delegated = delegate && !ethers.BigNumber.from(delegate).eq("0");
 
   console.log("roots:", storedRoot, merkleTree.getHexRoot());
 

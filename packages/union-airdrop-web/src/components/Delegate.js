@@ -1,44 +1,93 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { useForm } from "react-hook-form";
 import { Box, Label, Card, Control, Collapse, Input, Button } from "union-ui";
+import { isAddress } from "ethers/lib/utils";
+import useDelegate from "../hooks/useDelegate";
+import useAddNotification from "../hooks/useAddNotification";
 
 const DelegateType = {
   SELF: "self",
   ADDRESS: "address",
 };
 
-const options = [
-  {
-    title: "Delegate to self",
-    content:
-      "Delegate your votes to yourself so that you can vote manually on Union improvement proposals.",
-    type: DelegateType.SELF,
-  },
-  {
-    title: "Delegate to an address",
-    content: (
-      <>
-        <Label>
-          Delegate your votes to an Ethereum address who’s likely to vote on
-          your behalf
-        </Label>
-        <Box fluid mt="12px">
-          <Input name="address" placeholder="0x000...000" />
-        </Box>
-      </>
-    ),
-    type: DelegateType.ADDRESS,
-  },
-];
-
 export default function Delegate() {
+  const { account } = useWeb3React();
   const [delegateType, setDelegateType] = useState(DelegateType.SELF);
+  const delegate = useDelegate();
+  const addNotification = useAddNotification();
+
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
   const handleSelectOption = (option) => {
     setDelegateType(option.type);
+    const value = option.type === DelegateType.SELF ? account : null;
+    const revalidate = option.type === Delegate.SELF;
+    setValue("address", value, {
+      shouldValidate: revalidate,
+      shouldDirty: revalidate,
+    });
   };
 
+  const handleDelegate = async (values) => {
+    const address = values.address;
+    const clear = addNotification("Pending delegation", { type: "pending" });
+    try {
+      const tx = await delegate(address);
+      await tx.wait();
+      addNotification("Successfully delegated");
+    } catch (error) {
+      addNotification("Delegation failed", { type: "error" });
+    } finally {
+      clear();
+    }
+  };
+
+  const validate = (value) => {
+    if (!value) return "Please provide an address value";
+    if (!isAddress(value)) return "Invalid address";
+    return true;
+  };
+
+  const options = [
+    {
+      title: "Delegate to self",
+      content:
+        "Delegate your votes to yourself so that you can vote manually on Union improvement proposals.",
+      type: DelegateType.SELF,
+    },
+    {
+      title: "Delegate to an address",
+      content: (
+        <>
+          <Label>
+            Delegate your votes to an Ethereum address who’s likely to vote on
+            your behalf
+          </Label>
+          <Box fluid mt="12px">
+            <Input
+              {...register("address", { validate })}
+              error={errors?.address?.message}
+              placeholder="0x000...000"
+            />
+          </Box>
+        </>
+      ),
+      type: DelegateType.ADDRESS,
+    },
+  ];
+
+  useEffect(() => {
+    account && setValue("address", account);
+  }, [account, setValue]);
+
   return (
-    <>
+    <form onSubmit={handleSubmit(handleDelegate)}>
       {options.map((option) => {
         const selected = option.type === delegateType;
 
@@ -75,7 +124,7 @@ export default function Delegate() {
         );
       })}
 
-      <Button mt="8px" fluid label="Delegate votes" />
-    </>
+      <Button type="submit" mt="8px" fluid label="Delegate votes" />
+    </form>
   );
 }

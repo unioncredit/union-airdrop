@@ -11,8 +11,6 @@ export default function useClaimable() {
     return snapshot.find((item) => item.address === account);
   }, [account]);
 
-  console.log({ data });
-
   return (
     data || {
       borrowers: 0,
