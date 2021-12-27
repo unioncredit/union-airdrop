@@ -13,6 +13,12 @@ body {
   top: -4px;
 }
 
+.claimedText {
+  background: #f0fdf4;
+  padding: 12px;
+  border-radius: 8px;
+}
+
 .claimedText svg path {
   fill: #22c55e;
 }

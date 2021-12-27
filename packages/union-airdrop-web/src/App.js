@@ -9,6 +9,7 @@ import useInactiveListener from "./hooks/useInactiveListener";
 import Wrapper from "./components/Wrapper";
 import Home from "./views/Home";
 import Claim from "./views/Claim";
+import GeoBlock from "./views/GeoBlock";
 import notificationsState from "./state/notifications";
 
 function getLibrary(provider) {
@@ -44,6 +45,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/claim" element={<Claim />} />
+                <Route path="/geo" element={<GeoBlock />} />
               </Routes>
             </Wrapper>
             <NotificationStack>
