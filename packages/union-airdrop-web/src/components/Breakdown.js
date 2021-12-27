@@ -1,27 +1,37 @@
+import { ethers } from "ethers";
 import { useState } from "react";
 import { commify } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import { Card, Text, Box, Button, Label } from "union-ui";
 
 import useClaim from "../hooks/useClaim";
 import useAddNotification from "../hooks/useAddNotification";
 
-export default function Breakdown({ breakdown, disabled }) {
+export default function Breakdown({ breakdown, disabled, merkleTree, tokens }) {
+  const { account } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const claim = useClaim();
   const addNotification = useAddNotification();
 
-  const amount = null;
-  const proof = null;
+  const amount = tokens;
+
+  const leaf = ethers.utils.solidityKeccak256(
+    ["address", "uint256"],
+    [account, amount]
+  );
+
+  const proof = merkleTree.getHexProof(leaf);
 
   const handleClaim = async () => {
     const clear = addNotification("Pending claim", { type: "pending" });
     setLoading(true);
 
     try {
-      const tx = await claim(proof, amount);
+      const tx = await claim(proof, amount.toString());
       await tx.wait();
       addNotification("Claim successfull");
-    } catch (_) {
+    } catch (error) {
+      console.log(error);
       addNotification("Claim failed", { type: "error" });
     } finally {
       setLoading(false);

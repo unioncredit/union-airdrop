@@ -46,7 +46,7 @@ export default function ClaimCard() {
     { label: "In Default", value: 500, negative: isDefaulted },
   ];
 
-  const claimed = false;
+  const claimed = true;
 
   const elegible = tokens > 0;
 
@@ -55,6 +55,10 @@ export default function ClaimCard() {
   const delegated = delegate && !ethers.BigNumber.from(delegate).eq("0");
 
   console.log("roots:", storedRoot, merkleTree.getHexRoot());
+
+  if (claimed) {
+    return <Claimed />;
+  }
 
   return (
     <Card>
@@ -89,10 +93,13 @@ export default function ClaimCard() {
           />
         ) : (
           <>
-            {claimed ? (
-              <Claimed tokens={tokens} />
-            ) : delegated ? (
-              <Breakdown breakdown={breakdown} disabled={!active} />
+            {delegated ? (
+              <Breakdown
+                breakdown={breakdown}
+                disabled={!active}
+                tokens={tokens}
+                merkleTree={merkleTree}
+              />
             ) : (
               <Delegate />
             )}
