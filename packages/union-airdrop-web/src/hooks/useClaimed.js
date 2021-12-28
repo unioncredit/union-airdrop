@@ -4,7 +4,7 @@ import useSWR from "swr";
 import useAirdropContract from "./useAirdropContract";
 
 function fetchClaimed(_, contract, address) {
-  return contract.claims(address);
+  return contract.claimed(address);
 }
 
 export default function useClaimed() {

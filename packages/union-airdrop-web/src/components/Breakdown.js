@@ -6,12 +6,14 @@ import { Card, Text, Box, Button, Label } from "union-ui";
 
 import useClaim from "../hooks/useClaim";
 import useAddNotification from "../hooks/useAddNotification";
+import useClaimed from "../hooks/useClaimed";
 
 export default function Breakdown({ breakdown, disabled, merkleTree, tokens }) {
   const { account } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const claim = useClaim();
   const addNotification = useAddNotification();
+  const { mutate: updateClaimed } = useClaimed();
 
   const amount = tokens;
 
@@ -30,6 +32,7 @@ export default function Breakdown({ breakdown, disabled, merkleTree, tokens }) {
       const tx = await claim(proof, amount.toString());
       await tx.wait();
       addNotification("Claim successfull");
+      await updateClaimed();
     } catch (error) {
       console.log(error);
       addNotification("Claim failed", { type: "error" });
