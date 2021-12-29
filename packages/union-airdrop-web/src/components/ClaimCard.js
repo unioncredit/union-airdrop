@@ -1,6 +1,16 @@
+import {
+  Card,
+  Heading,
+  Button,
+  Box,
+  Badge,
+  Divider,
+  Stat,
+  Alert,
+} from "union-ui";
+import { useState } from "react";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { Card, Heading, Box, Badge, Divider, Stat, Alert } from "union-ui";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
 import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
@@ -22,6 +32,7 @@ import useClaimed from "../hooks/useClaimed";
 export default function ClaimCard() {
   useNotConnected();
 
+  const [showDelegate, setShowDelegate] = useState(false);
   const { account } = useWeb3React();
   const { data: paused } = usePaused();
   const { storedRoot, merkleTree } = useMerkleRoot();
@@ -89,19 +100,30 @@ export default function ClaimCard() {
           <Alert
             size="small"
             icon={<Info />}
-            label="You’re not elegible for the $UNION distribution"
+            label="You’re not elegible for the UNION distribution"
           />
         ) : (
           <>
-            {delegated ? (
-              <Breakdown
-                breakdown={breakdown}
-                disabled={!active}
-                tokens={tokens}
-                merkleTree={merkleTree}
-              />
-            ) : (
+            {!delegated && showDelegate ? (
               <Delegate />
+            ) : (
+              <>
+                <Breakdown
+                  breakdown={breakdown}
+                  disabled={!active}
+                  tokens={tokens}
+                  merkleTree={merkleTree}
+                  hideButton={!delegated && !showDelegate}
+                />
+                {!delegated && !showDelegate && (
+                  <Button
+                    fluid
+                    mt="16px"
+                    onClick={() => setShowDelegate(true)}
+                    label="Delegate Votes to Claim"
+                  />
+                )}
+              </>
             )}
           </>
         )}

@@ -22,7 +22,7 @@
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
     "swr": "^1.0.1",
-    "union-ui": "^0.2.50"
+    "union-ui": "^0.2.58"
   },
   "scripts": {
     "start": "react-scripts start",

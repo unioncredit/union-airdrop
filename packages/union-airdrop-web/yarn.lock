@@ -12665,10 +12665,10 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.1.0.tgz#dd57a99f6207bedff4628abefb94c50db941c8f4"
   integrity sha512-PqSoPh/pWetQ2phoj5RLiaqIk4kCNwoV3CI+LfGmWLKI3rE3kl1h59XpX2BjgDrmbxD9ARtQobPGU1SguCYuQg==
 
-union-ui@^0.2.50:
-  version "0.2.50"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.50.tgz#0b480e05f3c8ba0e54cd6fde3463d3f231ab849a"
-  integrity sha512-vuMOTQ6uqAVdzagnS5svI1BJ/vuDwZJtBkuv60WBa6wFl8Yj1HlDJsXQPdWHIDe+fZScE3NrkzGRLpInK0W/5w==
+union-ui@^0.2.58:
+  version "0.2.58"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.58.tgz#bfdf2ec7f04574bf5a3a659d61f1c36f7f611d31"
+  integrity sha512-/wFT/TfFfcpTIZtTPSaJIrCfb/ELyj+h2Z56hQE0z6UpgtCq7MkkXRHO8FgLnv8U/9D8CNMF0wp3NMIEGbZspA==
   dependencies:
     classnames "^2.3.1"
     react-animate-height "^2.0.23"

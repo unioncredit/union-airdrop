@@ -27,7 +27,7 @@ export default function Home() {
         Define the future of Union
       </Heading>
       <Text align="center" grey={400}>
-        $UNION is voting power and voice for the Union protocol. Tokens are
+        UNION is voting power and voice for the Union protocol. Tokens are
         claimable by early participants in Union’s public tests.
       </Text>
       <Box align="center" justify="center" className="governanceLink">

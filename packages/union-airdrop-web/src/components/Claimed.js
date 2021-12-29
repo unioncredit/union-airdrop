@@ -1,6 +1,6 @@
 import { Text, Box, Card, Divider, Heading, Button } from "union-ui";
 import { ReactComponent as Twitter } from "union-ui/lib/icons/twitter.svg";
-import { ReactComponent as Discord } from "union-ui/lib/icons/twitter.svg";
+import { ReactComponent as Discord } from "union-ui/lib/icons/discord.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
 
 export default function Claimed() {
@@ -9,7 +9,7 @@ export default function Claimed() {
       <Card.Body>
         <Box align="center" justify="center" className="claimedText">
           <Text color="green500" align="center" m={0}>
-            $UNION Claimed
+            UNION Claimed
           </Text>
           <Check width="24px" />
         </Box>
@@ -18,21 +18,21 @@ export default function Claimed() {
           What’s next?
         </Heading>
         <Text align="center" grey={400}>
-          You claimed your $UNION distribution. Now it’s time to get your
+          You claimed your UNION distribution. Now it’s time to get your
           governance hat on, for the good of the protocol.
         </Text>
         <Button
           mt="24px"
           fluid
           variant="secondary"
-          label="Join the Discord"
+          label="Join the DAO on Discord"
           icon={Discord}
         />
         <Button
           mt="8px"
           fluid
           variant="secondary"
-          label="Follow us on Twitter"
+          label="Follow on Twitter for updates"
           icon={Twitter}
         />
       </Card.Body>

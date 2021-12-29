@@ -8,7 +8,13 @@ import useClaim from "../hooks/useClaim";
 import useAddNotification from "../hooks/useAddNotification";
 import useClaimed from "../hooks/useClaimed";
 
-export default function Breakdown({ breakdown, disabled, merkleTree, tokens }) {
+export default function Breakdown({
+  hideButton,
+  breakdown,
+  disabled,
+  merkleTree,
+  tokens,
+}) {
   const { account } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const claim = useClaim();
@@ -62,14 +68,16 @@ export default function Breakdown({ breakdown, disabled, merkleTree, tokens }) {
           ))}
         </Card.Body>
       </Card>
-      <Button
-        label="Claim tokens"
-        fluid
-        mt="16px"
-        loading={loading}
-        disabled={disabled}
-        onClick={handleClaim}
-      />
+      {!hideButton && (
+        <Button
+          label="Claim tokens"
+          fluid
+          mt="16px"
+          loading={loading}
+          disabled={disabled}
+          onClick={handleClaim}
+        />
+      )}
     </>
   );
 }
