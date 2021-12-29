@@ -3,8 +3,9 @@ import useSWR from "swr";
 
 import useAirdropContract from "./useAirdropContract";
 
-function fetchClaimed(_, contract, address) {
-  return contract.claimed(address);
+async function fetchClaimed(_, contract, address) {
+  const amount = await contract.claimed(address);
+  return amount.gt("0");
 }
 
 export default function useClaimed() {
