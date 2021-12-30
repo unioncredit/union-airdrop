@@ -32,6 +32,7 @@ async function hasRing(address) {
 async function main() {
   let results = {};
   for (const address of addresses) {
+    console.log("checking address:", address);
     const res = await hasRing(address);
     results[address] = res;
   }
