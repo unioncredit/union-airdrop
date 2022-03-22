@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Box } from "union-ui";
+import { useEffect, useState } from "react";
+import { Box, LoadingSpinner } from "union-ui";
 import { useNavigate } from "react-router-dom";
 import ClaimCard from "../components/ClaimCard";
 
@@ -40,6 +40,7 @@ const restrictedCountryCodes = [
 
 export default function Claim() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function geoCheck() {
@@ -49,7 +50,10 @@ export default function Claim() {
         if (restrictedCountryCodes.includes(data.country)) {
           navigate(`/geo?country=${data.country}`);
         }
-      } catch (_) {}
+      } catch (_) {
+      } finally {
+        setLoading(false);
+      }
     }
 
     geoCheck();
@@ -57,7 +61,13 @@ export default function Claim() {
 
   return (
     <Box direction="vertical" align="center" justify="center" fluid>
-      <ClaimCard />
+      {loading ? (
+        <Box mt="80px">
+          <LoadingSpinner size={32} />
+        </Box>
+      ) : (
+        <ClaimCard />
+      )}
     </Box>
   );
 }
