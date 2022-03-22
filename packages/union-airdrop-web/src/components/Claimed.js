@@ -3,6 +3,10 @@ import { ReactComponent as Twitter } from "union-ui/lib/icons/twitter.svg";
 import { ReactComponent as Discord } from "union-ui/lib/icons/discord.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
 
+const discordLink = "https://discord.com/invite/cZagzJ3p8G";
+
+const twitterLink = "https://twitter.com/unionprotocol";
+
 export default function Claimed() {
   return (
     <Card>
@@ -26,11 +30,19 @@ export default function Claimed() {
           fluid
           variant="secondary"
           label="Join the DAO on Discord"
+          as="a"
+          href={discordLink}
+          target="_blank"
+          rel="norefferer"
           icon={Discord}
         />
         <Button
           mt="8px"
           fluid
+          as="a"
+          href={twitterLink}
+          target="_blank"
+          rel="norefferer"
           variant="secondary"
           label="Follow on Twitter for updates"
           icon={Twitter}
