@@ -27,3 +27,7 @@ const root = merkleTree.getHexRoot();
 console.log("Root:", root);
 
 console.log("End date:", endDate);
+
+console.log("Union tokens:");
+console.log("Kovan:   0x08AF898e65493D8212c8981FAdF60Ff023A91150");
+console.log("Mainnet: 0x5Dfe42eEA70a3e6f93EE54eD9C321aF07A85535C");
