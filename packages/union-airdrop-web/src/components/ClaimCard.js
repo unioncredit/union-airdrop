@@ -14,7 +14,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as Union } from "union-ui/lib/icons/union.svg";
 import { ReactComponent as Info } from "union-ui/lib/icons/wireInfo.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
-import { commify } from "@ethersproject/units";
+import { commify, formatEther } from "@ethersproject/units";
 
 import Avatar from "../components/Avatar";
 import useENSName from "../hooks/useENSName";
@@ -91,7 +91,8 @@ export default function ClaimCard() {
             label="CLAIMABLE UNION"
             value={
               <>
-                {commify(tokens)} <Union className="unionSymbol" width="16px" />
+                {commify(Number(formatEther(tokens)).toFixed(0))}{" "}
+                <Union className="unionSymbol" width="16px" />
               </>
             }
           />

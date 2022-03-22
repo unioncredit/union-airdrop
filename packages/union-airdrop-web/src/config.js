@@ -1,6 +1,6 @@
 const config = {
   42: {
-    airdrop: "0x360298D45876c885a3260ebb1cF89e9817011A78",
+    airdrop: "0xE5387e05CD84f2b1b5dD3EA75A0FF6Ac0C8831e4",
     governance: "0x08AF898e65493D8212c8981FAdF60Ff023A91150",
   },
   1: {
