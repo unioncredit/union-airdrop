@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { uniq } = require("lodash");
 const { Parser } = require("json2csv");
+const { parseEther } = require("ethers/lib/utils");
 
 function readJsonFile(path) {
   return JSON.parse(fs.readFileSync(path));
@@ -30,7 +31,10 @@ function calculateUnionTokens(data) {
 
   value += data.stakers * 100;
 
-  return value >= 25000 ? 25000 : value;
+  const total = value >= 25000 ? 25000 : value;
+
+  console.log(parseEther(total.toString()));
+  return parseEther(total.toString()).toString(10);
 }
 
 const addresses = readJsonFile("./data/polygon-snapshot.json");
@@ -41,9 +45,11 @@ const trustUpdates = readJsonFile("./data/polygon-update-trust-snapshot.json");
 
 const ringOwners = readJsonFile("./data/ring-nft-snapshot.json");
 
+const arcxAddresses = readJsonFile("./data/arcx-snapshot.json");
+
 const results = [];
 
-for (const address of addresses) {
+for (const address of uniq([...addresses, ...arcxAddresses])) {
   const isDefaulted = defaulted[address];
 
   const isRingOwner = ringOwners[address];
