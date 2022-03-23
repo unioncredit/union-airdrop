@@ -31,7 +31,14 @@ export default function Home() {
         claimable by early participants in Union’s public tests.
       </Text>
       <Box align="center" justify="center" className="governanceLink">
-        <Label as="a" color="blue500" m={0}>
+        <Label
+          m={0}
+          as="a"
+          target="_blank"
+          color="blue500"
+          rel="norefferer"
+          href="https://medium.com/union-finance/intro-to-union-token-and-dao-d6040e0e7a8b"
+        >
           Intro to Union Governance
         </Label>
         <RightArrow width="24px" />
