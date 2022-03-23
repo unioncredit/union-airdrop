@@ -8,7 +8,9 @@ export default function useClaimable() {
   const data = useMemo(() => {
     if (!account) return null;
 
-    return snapshot.find((item) => item.address === account);
+    return snapshot.find(
+      (item) => item.address.toLowerCase() === account.toLowerCase()
+    );
   }, [account]);
 
   return (
