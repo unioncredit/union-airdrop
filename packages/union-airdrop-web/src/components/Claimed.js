@@ -3,7 +3,7 @@ import { ReactComponent as Twitter } from "union-ui/lib/icons/twitter.svg";
 import { ReactComponent as Discord } from "union-ui/lib/icons/discord.svg";
 import { ReactComponent as Check } from "union-ui/lib/icons/wireCheck.svg";
 
-const discordLink = "https://discord.com/invite/cZagzJ3p8G";
+const discordLink = "https://discord.com/invite/DWF29rjRJH";
 
 const twitterLink = "https://twitter.com/unionprotocol";
 
